@@ -1,5 +1,9 @@
+### Emisor del mensaje
 import re
-#Funciones utilizadas para Hamming
+import socket
+import pickle
+
+### Funciones utilizadas para la implementacion de Hamming
 def VerRdn(m): 
     for i in range(m): 
         if(2**i >= m + i + 1): 
@@ -38,11 +42,23 @@ def VerFnl(dat, nr):
     return int(str(res), 2)
 
 
-Mensaje=input("Ingrese el mensaje")
+Mensaje=input("Ingrese el mensaje: ")
+
+### Conexion por Socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind(('127.0.0.1',9000))
+sock.listen(1)
+conexion, direccion = sock.accept()
+print("Conexion relaizada con exito de la direccion", str(direccion))
+
+### Procesamiento de capas del mensaje a enviar
+mensajeEnviar = ''
+
+### Convertir mensaje de STR -> BIN
 Binario=' '.join(map(bin,bytearray(Mensaje,'utf8')))
 Binario=Binario.replace("b","")
 Binario=Binario.replace(" ","")
-print(Binario)
+print("Mensaje en binario:", Binario)
 m = len(Binario) 
 r = VerRdn(m) 
 dat = PosRdn(Binario, r) 
@@ -52,12 +68,14 @@ print("Error Data is " + dat)
 correction = VerFnl(dat, r) 
 print("El error se ecuentra en " + str(correction))
 print(dat)
-ruido=int(input("Desea agregar ruido al mensaje, 1.Si 2.No (Seleccion un numero)"))
+
+### Se ingresa el ruido al mensaje
+ruido=int(input("Desea agregar ruido al mensaje, 1.Si 2.No (Seleccion un numero): "))
 if ruido==1:
     Lista=list(dat)
     lista2=[]
     print(Lista)
-    intervalo=int(input("Ingrese el intervalo del ruido"))
+    intervalo=int(input("Ingrese el intervalo del ruido: "))
     intervalo2=0
     for i in range(len(dat)):
         intervalo2+=1
@@ -68,11 +86,20 @@ if ruido==1:
             lista2.append(Lista[i])
             # Lista[i]=Mensaje.replace(Mensaje[i],"q")
             # print(Lista)
-        print(lista2)
-    asd=""
-    asd=asd.join(lista2)
+        #print(lista2)
+    objeto=""
+    objeto=objeto.join(lista2)
     print("Ruido")
-    print(asd)
+    print(objeto)
     print("Ruido")
-    correction = VerFnl(asd, r) 
+    correction = VerFnl(objeto, r) 
     print("El error se ecuentra en  " + str(correction))
+    dat = objeto
+
+### Utilizamos pickle para hacer provecho del uso del paquete bitarray    
+mensajeEnviar = pickle.dumps(dat)
+
+### Se envia el objeto mensaje
+conexion.send(mensajeEnviar)
+
+conexion.close()
