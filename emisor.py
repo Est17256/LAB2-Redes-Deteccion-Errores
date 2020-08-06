@@ -2,8 +2,6 @@
 import re
 import socket
 import pickle
-from bitarray import bitarray
-
 ### Funciones utilizadas para la implementacion de Hamming
 def VerRdn(m): 
     for i in range(m): 
@@ -118,9 +116,6 @@ if opcionita == 1:
     dat = PosRdn(Binario, r) 
     dat = VerPrd(dat, r) 
     print(dat)
-    print("Error Data is " + dat)
-    correction = VerFnl(dat, r) 
-    print("El error se ecuentra en " + str(correction))
     print(dat)
 
     ### Se ingresa el ruido al mensaje
@@ -138,16 +133,11 @@ if opcionita == 1:
                 intervalo2=0
             else:
                 lista2.append(Lista[i])
-                # Lista[i]=Mensaje.replace(Mensaje[i],"q")
-                # print(Lista)
-            #print(lista2)
         objeto=""
         objeto=objeto.join(lista2)
         print("Ruido")
         print(objeto)
         print("Ruido")
-        correction = VerFnl(objeto, r) 
-        print("El error se ecuentra en  " + str(correction))
         dat = objeto
 
     ### Utilizamos pickle para hacer provecho del uso del paquete bitarray    

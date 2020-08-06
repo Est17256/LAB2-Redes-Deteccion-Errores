@@ -1,6 +1,43 @@
 ### Receptor del mensaje
 import socket
 import pickle
+### Funciones utilizadas para la implementacion de Hamming
+def VerRdn(m): 
+    for i in range(m): 
+        if(2**i >= m + i + 1): 
+            return i 
+def PosRdn(data, r): 
+    j = 0
+    k = 1
+    m = len(data) 
+    res = '' 
+    for i in range(1, m + r+1): 
+        if(i == 2**j): 
+            res = res + '0'
+            j += 1
+        else: 
+            res = res + data[-1 * k] 
+            k += 1
+    return res[::-1] 
+def VerPrd(dat, r): 
+    n = len(dat) 
+    for i in range(r): 
+        val = 0
+        for j in range(1, n + 1): 
+            if(j & (2**i) == (2**i)): 
+                val = val ^ int(dat[-1 * j]) 
+        dat = dat[:n-(2**i)] + str(val) + dat[n-(2**i)+1:] 
+    return dat 
+def VerFnl(dat, nr): 
+    n = len(dat) 
+    res = 0
+    for i in range(nr): 
+        val = 0
+        for j in range(1, n + 1): 
+            if(j & (2**i) == (2**i)): 
+                val = val ^ int(dat[-1 * j]) 
+        res = res + val*(10**i) 
+    return int(str(res), 2)
 
 ### Funciones utilizadas para la implementacion de CRC
 def sumarSegmentos(segmento1, segmento2):
@@ -90,11 +127,8 @@ while mensajeRecibido:
         r = int(mensaje[sep+1:])
         print(mensajeSeparado) ## Este es el binario que generaste xD
         print(r) ## r
-
-        # Esto es lo que tenes que quitar en el emisor y descomentar aca
-        # Y copiar las funciones del emisor para Hammer y ponerlas hasta arriba :)
-        #correction = VerFnl(mensajeSeparado, r) 
-        #print("El error se ecuentra en  " + str(correction))
+        correction = VerFnl(mensajeSeparado, r) 
+        print("El error fue encontrado en la posion:" + str(correction)+"de atras para adelante")
 
     else:
         print('Verificacion CRC-32')
