@@ -125,10 +125,9 @@ while mensajeRecibido:
         sep = mensaje.find(',')
         mensajeSeparado = mensaje[:sep]
         r = int(mensaje[sep+1:])
-        print(mensajeSeparado) ## Este es el binario que generaste xD
-        print(r) ## r
+        print(mensajeSeparado)
         correction = VerFnl(mensajeSeparado, r) 
-        print("El error fue encontrado en la posion:" + str(correction)+"de atras para adelante")
+        print("El error fue encontrado en la posicion: " + str(correction)+" de atras para adelante")
 
     else:
         print('Verificacion CRC-32')
