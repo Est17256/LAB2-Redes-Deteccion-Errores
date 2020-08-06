@@ -114,7 +114,7 @@ binarioDeteccion = Binario
 opcionita=int(input("Cual algoritmo desea probar, 1.Hamming 2.CRC-32 (Seleccion un numero): "))
 if opcionita == 1:
     m = len(Binario) 
-    r = VerRdn(m) 
+    r = VerRdn(m)
     dat = PosRdn(Binario, r) 
     dat = VerPrd(dat, r) 
     print(dat)
@@ -151,7 +151,7 @@ if opcionita == 1:
         dat = objeto
 
     ### Utilizamos pickle para hacer provecho del uso del paquete bitarray    
-    dat = '0' + dat
+    dat = '0' + dat + ',' + str(r)
     mensajeEnviar = pickle.dumps(dat)
 
 else:

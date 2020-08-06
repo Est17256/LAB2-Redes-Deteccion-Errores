@@ -85,7 +85,16 @@ while mensajeRecibido:
     print(mensajeDesempacado)
     if algoritmo == '0':
         print('Verificacion Hamming')
-        print(mensaje) ## Este es el binario con ruido que vos generaste xD
+        sep = mensaje.find(',')
+        mensajeSeparado = mensaje[:sep]
+        r = int(mensaje[sep+1:])
+        print(mensajeSeparado) ## Este es el binario que generaste xD
+        print(r) ## r
+
+        # Esto es lo que tenes que quitar en el emisor y descomentar aca
+        # Y copiar las funciones del emisor para Hammer y ponerlas hasta arriba :)
+        #correction = VerFnl(mensajeSeparado, r) 
+        #print("El error se ecuentra en  " + str(correction))
 
     else:
         print('Verificacion CRC-32')
