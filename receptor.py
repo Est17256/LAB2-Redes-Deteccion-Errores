@@ -39,7 +39,7 @@ def VerFnl(dat, nr):
         res = res + val*(10**i) 
     return int(str(res), 2)
 
-### Funciones utilizadas para la implementacion de CRC
+### Funciones utilizadas para la implementacion de Checksum
 def sumarSegmentos(segmento1, segmento2):
     carrier = '0'
     suma = ''
@@ -66,7 +66,7 @@ def sumarSegmentos(segmento1, segmento2):
         suma = carrier + suma
     return suma
     
-def recepcionCRC32(binario):
+def recepcionCheckSum(binario):
     n = 8
     arrayBinary = [binario[i:i+n] for i in range(0, len(binario), n)]
     arrayBinary.pop()
@@ -130,10 +130,10 @@ while mensajeRecibido:
         print("El error fue encontrado en la posicion: " + str(correction)+" de atras para adelante")
 
     else:
-        print('Verificacion CRC-32')
+        print('Verificacion Checksum')
         print(mensaje)
 
-        verificar = recepcionCRC32(mensaje)
+        verificar = recepcionCheckSum(mensaje)
         segmento = mensaje[-8:]
         resultado = verificador(verificar,segmento)
 

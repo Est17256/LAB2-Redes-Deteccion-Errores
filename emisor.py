@@ -40,7 +40,7 @@ def VerFnl(dat, nr):
         res = res + val*(10**i) 
     return int(str(res), 2)
 
-### Funciones utilizadas para la implementacion de CRC
+### Funciones utilizadas para la implementacion de checksum
 def sumarSegmentos(segmento1, segmento2):
     carrier = '0'
     suma = ''
@@ -67,7 +67,7 @@ def sumarSegmentos(segmento1, segmento2):
         suma = carrier + suma
     return suma
     
-def emisionCRC32(binario):
+def emisionCheckSum(binario):
     n = 8
     arrayBinary = [binario[i:i+n] for i in range(0, len(binario), n)]
     sumaSegmentos = '00000000'
@@ -109,7 +109,7 @@ Binario=Binario.replace(" ","")
 print("Mensaje en binario:", Binario)
 binarioDeteccion = Binario
 
-opcionita=int(input("Cual algoritmo desea probar, 1.Hamming 2.CRC-32 (Seleccion un numero): "))
+opcionita=int(input("Cual algoritmo desea probar, 1.Hamming 2.Checksum (Seleccion un numero): "))
 if opcionita == 1:
     m = len(Binario) 
     r = VerRdn(m)
@@ -169,7 +169,7 @@ else:
         dat = objeto
 
 
-    complemento = emisionCRC32(dat)
+    complemento = emisionCheckSum(dat)
     mensaje = '1' + Binario + complemento
 
     ### Utilizamos pickle para hacer provecho del uso del paquete bitarray    
